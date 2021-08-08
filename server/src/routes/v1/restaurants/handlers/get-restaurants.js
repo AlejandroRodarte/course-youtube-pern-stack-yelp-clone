@@ -1,23 +1,22 @@
-const getRestaurants = (req, res) => {
-    res.status(200).send({
-        status: 'OK',
-        data: {
-            restaurants: [
-                {
-                    id: 1,
-                    name: 'McDonalds',
-                    location: 'Seattle',
-                    priceRange: 3
-                },
-                {
-                    id: 2,
-                    name: 'Wendys',
-                    location: 'North Dakota',
-                    priceRange: 2
-                }
-            ]
-        }
-    });
+const getRestaurants = async (req, res) => {
+
+    const query = 
+        await req
+                .app
+                .get('db')
+                .query('SELECT * FROM restaurants');
+
+    const { rows } = query;
+
+    res
+        .status(200).
+        send({
+            status: 'OK',
+            data: {
+                restaurants: rows
+            }
+        });
+
 };
 
 module.exports = getRestaurants;
