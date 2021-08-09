@@ -3,9 +3,9 @@ import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 
 import withSuspense from '../../hoc/withSuspense/withSuspense';
 
-const RestaurantFinder = withSuspense(React.lazy(() => import('../../components/restaurants/RestaurantFinder')));
-const RestaurantReviews = withSuspense(React.lazy(() => import('../../components/restaurants/RestaurantReviews')));
-const RestaurantUpdate = withSuspense(React.lazy(() => import('../../components/restaurants/RestaurantUpdate')));
+const RestaurantFinder = withSuspense(React.lazy(() => import('../../components/restaurants/restaurant-finder/RestaurantFinder')));
+const RestaurantReviews = withSuspense(React.lazy(() => import('../../components/restaurants/restaurant-reviews/RestaurantReviews')));
+const RestaurantUpdate = withSuspense(React.lazy(() => import('../../components/restaurants/restaurant-update/RestaurantUpdate')));
 
 const RestaurantRouter = ({ match }) => (
     <Switch>
