@@ -3,7 +3,7 @@ import { Redirect, Route, Switch, withRouter } from 'react-router-dom';
 
 import withSuspense from '../../hoc/withSuspense/withSuspense';
 
-const RestaurantList = withSuspense(React.lazy(() => import('../../components/restaurants/RestaurantList')));
+const RestaurantFinder = withSuspense(React.lazy(() => import('../../components/restaurants/RestaurantFinder')));
 const RestaurantReviews = withSuspense(React.lazy(() => import('../../components/restaurants/RestaurantReviews')));
 const RestaurantUpdate = withSuspense(React.lazy(() => import('../../components/restaurants/RestaurantUpdate')));
 
@@ -12,7 +12,7 @@ const RestaurantRouter = ({ match }) => (
         <Route
             exact
             path={ match.path }
-            component={ RestaurantList }
+            component={ RestaurantFinder }
         />
         <Route
             path={ `${match.path}/:id(\\d+)/update` }

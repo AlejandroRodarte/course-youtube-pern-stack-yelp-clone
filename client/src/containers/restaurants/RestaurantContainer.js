@@ -1,7 +1,7 @@
 import RestaurantRouter from './../../routes/restaurants/RestaurantRouter';
 
-const RestaurantContainer = () => (
+const RestaurantFinder = () => (
     <RestaurantRouter />
 );
 
-export default RestaurantContainer;
+export default RestaurantFinder;
