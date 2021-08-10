@@ -18,10 +18,18 @@ const fetchRestaurants = (restaurants) => ({
     }
 });
 
+const addRestaurant = (restaurant) => ({
+    type: types.ADD_RESTAURANT,
+    payload: {
+        restaurant
+    }
+});
+
 const actions = {
     setRestaurantsLoadingFlag,
     setRestaurantsFailFlag,
-    fetchRestaurants
+    fetchRestaurants,
+    addRestaurant
 };
 
 export default actions;

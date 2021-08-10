@@ -17,8 +17,24 @@ const startFetchRestaurants = () => async (dispatch) => {
 
 };
 
+const startAddRestaurant = (restaurant) => async (dispatch) => {
+
+    dispatch(restaurantActions.setRestaurantsLoadingFlag());
+
+    const [response, error] = await restaurantsApi.addRestaurant(restaurant);
+
+    if (error) {
+        dispatch(restaurantActions.setRestaurantsFailFlag(error.data.message));
+        return;
+    }
+
+    dispatch(restaurantActions.addRestaurant(response.data.restaurant));
+
+};
+
 const effects = {
-    startFetchRestaurants
+    startFetchRestaurants,
+    startAddRestaurant
 };
 
 export default effects;

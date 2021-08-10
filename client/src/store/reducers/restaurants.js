@@ -28,6 +28,16 @@ const restaurantsReducer = (state = initialState, action) => {
                 restaurants: action.payload.restaurants,
                 error: null
             };
+        case types.ADD_RESTAURANT:
+            return {
+                ...state,
+                loading: false,
+                restaurants: [
+                    ...state.restaurants,
+                    action.payload.restaurant
+                ],
+                error: null
+            };
         default:
             return state;
     }

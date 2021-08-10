@@ -9,7 +9,7 @@ import RestaurantList from './children/restaurant-list/RestaurantList';
 
 import Spinner from './../../ui/spinners/BasicSpinner';
 
-const RestaurantFinder = ({ restaurants, loading, error, onFetchRestaurants }) => {
+const RestaurantFinder = ({ restaurants, loading, error, onFetchRestaurants, onAddRestaurant }) => {
 
     useEffect(() => {
         if (restaurants.length === 0) onFetchRestaurants();
@@ -32,7 +32,9 @@ const RestaurantFinder = ({ restaurants, loading, error, onFetchRestaurants }) =
     return (
         <div>
             <Header />
-            <AddRestaurantForm />
+            <AddRestaurantForm
+                onAddRestaurant={ onAddRestaurant }
+            />
             { restaurantListJsx }
         </div>
     );
@@ -46,7 +48,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onFetchRestaurants: () => dispatch(restaurantEffects.startFetchRestaurants())
+    onFetchRestaurants: () => dispatch(restaurantEffects.startFetchRestaurants()),
+    onAddRestaurant: (restaurant) => dispatch(restaurantEffects.startAddRestaurant(restaurant))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantFinder);
