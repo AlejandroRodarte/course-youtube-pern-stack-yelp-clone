@@ -6,8 +6,8 @@ import * as types from '../../../store/types';
 import { restaurantEffects } from '../../../store/effects';
 
 import Header from './children/Header';
-import AddRestaurantForm from './children/AddRestaurantForm';
 import RestaurantList from './children/restaurant-list/RestaurantList';
+import RestaurantForm from '../common/RestaurantForm';
 
 import Spinner from './../../ui/spinners/BasicSpinner';
 
@@ -48,8 +48,9 @@ const RestaurantFinder = ({
     return (
         <div>
             <Header />
-            <AddRestaurantForm
-                onAddRestaurant={ onAddRestaurant }
+            <RestaurantForm
+                onSubmit={ onAddRestaurant }
+                submitButtonLabel="Add Restaurant"
             />
             { restaurantListJsx }
         </div>

@@ -1,6 +1,9 @@
 import { useForm } from 'react-hook-form';
 
-const AddRestaurantForm = ({ onAddRestaurant }) => {
+const RestaurantForm = ({
+    onSubmit,
+    submitButtonLabel
+}) => {
 
     const {
         register,
@@ -10,14 +13,14 @@ const AddRestaurantForm = ({ onAddRestaurant }) => {
         mode: 'onBlur'
     });
 
-    const onSubmit = (restaurant) => {
+    const onSubmitButtonClick = (restaurant) => {
 
         const parsedRestaurant = {
             ...restaurant,
             priceRange: +restaurant.priceRange
         };
 
-        onAddRestaurant(parsedRestaurant);
+        onSubmit(parsedRestaurant);
 
     };
 
@@ -57,7 +60,7 @@ const AddRestaurantForm = ({ onAddRestaurant }) => {
             className="mb-4 text-center"
         >
             <form
-                onSubmit={ handleSubmit(onSubmit) }
+                onSubmit={ handleSubmit(onSubmitButtonClick) }
             >
                 <div 
                     className="row"
@@ -116,7 +119,7 @@ const AddRestaurantForm = ({ onAddRestaurant }) => {
                             type="submit"
                             disabled={ !formState.isValid }
                         >
-                            Add Restaurant
+                            { submitButtonLabel }
                         </button>
                     </div>
                 </div>
@@ -126,4 +129,4 @@ const AddRestaurantForm = ({ onAddRestaurant }) => {
 
 };
 
-export default AddRestaurantForm;
+export default RestaurantForm;
