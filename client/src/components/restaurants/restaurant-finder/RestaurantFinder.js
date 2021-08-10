@@ -5,7 +5,7 @@ import { restaurantEffects } from '../../../store/effects';
 
 import Header from './children/Header';
 import AddRestaurantForm from './children/AddRestaurantForm';
-import RestaurantList from './children/RestaurantList';
+import RestaurantList from './children/restaurant-list/RestaurantList';
 
 const RestaurantFinder = ({ restaurants, onFetchRestaurants }) => {
 
