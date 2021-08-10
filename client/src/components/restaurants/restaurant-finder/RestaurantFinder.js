@@ -12,8 +12,8 @@ import Spinner from './../../ui/spinners/BasicSpinner';
 const RestaurantFinder = ({ restaurants, loading, error, onFetchRestaurants }) => {
 
     useEffect(() => {
-        onFetchRestaurants();
-    }, [onFetchRestaurants]);
+        if (restaurants.length === 0) onFetchRestaurants();
+    }, [restaurants.length, onFetchRestaurants]);
 
     let jsx = (
         <div>
