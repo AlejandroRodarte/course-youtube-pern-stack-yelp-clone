@@ -2,7 +2,8 @@ import Restaurant from "./children/Restaurant";
 
 const RestaurantList = ({
     restaurants,
-    onDeleteRestaurant
+    onDeleteButtonClick,
+    onEditButtonClick
 }) => (
     <div
         className="list-group"
@@ -52,7 +53,8 @@ const RestaurantList = ({
                         <Restaurant 
                             key={ restaurant.id } 
                             restaurant={ restaurant }
-                            onDeleteRestaurant={ onDeleteRestaurant }
+                            onDeleteButtonClick={ onDeleteButtonClick }
+                            onEditButtonClick={ onEditButtonClick }
                         />
                     ))
                 }

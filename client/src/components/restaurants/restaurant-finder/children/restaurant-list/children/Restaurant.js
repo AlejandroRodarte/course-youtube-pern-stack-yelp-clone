@@ -2,10 +2,12 @@ import { useCallback } from 'react';
 
 const Restaurant = ({
     restaurant,
-    onDeleteRestaurant
+    onDeleteButtonClick,
+    onEditButtonClick
 }) => {
 
-    const deleteRestaurant = useCallback(() => onDeleteRestaurant(restaurant.id), [onDeleteRestaurant, restaurant.id]);
+    const deleteButtonClick = useCallback(() => onDeleteButtonClick(restaurant.id), [onDeleteButtonClick, restaurant.id]);
+    const editButtonClick = useCallback(() => onEditButtonClick(restaurant.id), [onEditButtonClick, restaurant.id]);
 
     return (
         <tr>
@@ -27,6 +29,7 @@ const Restaurant = ({
             <td>
                 <button
                     className="btn btn-warning"
+                    onClick={ editButtonClick }
                 >
                     Update
                 </button>
@@ -35,7 +38,7 @@ const Restaurant = ({
             <td>
                 <button
                     className="btn btn-danger"
-                    onClick={ deleteRestaurant }
+                    onClick={ deleteButtonClick }
                 >
                     Delete
                 </button>

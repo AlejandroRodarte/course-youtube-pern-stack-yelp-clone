@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import * as types from '../../../store/types';
 import { restaurantEffects } from '../../../store/effects';
@@ -16,17 +17,23 @@ const RestaurantFinder = ({
     error,
     onFetchRestaurants,
     onAddRestaurant,
-    onDeleteRestaurant
+    onDeleteRestaurant,
+    match
 }) => {
 
     useEffect(() => {
         if (restaurants.length === 0) onFetchRestaurants();
     }, [restaurants.length, onFetchRestaurants]);
 
+    const history = useHistory();
+
+    const onEditButtonClick = useCallback((id) => history.push(`${match.url}/${id}/update`), [history, match.url]);
+
     let restaurantListJsx = (
         <RestaurantList 
             restaurants={ restaurants }
-            onDeleteRestaurant={ onDeleteRestaurant }
+            onDeleteButtonClick={ onDeleteRestaurant }
+            onEditButtonClick={ onEditButtonClick }
         />
     );
 
