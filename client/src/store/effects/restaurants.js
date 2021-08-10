@@ -6,10 +6,10 @@ const startFetchRestaurants = () => async (dispatch) => {
 
     dispatch(restaurantActions.setRestaurantsLoadingFlag());
 
-    const [{ data: response }, error] = await restaurantsApi.getRestaurants();
+    const [response, error] = await restaurantsApi.getRestaurants();
 
     if (error) {
-        dispatch(restaurantActions.setRestaurantsFailFlag(error));
+        dispatch(restaurantActions.setRestaurantsFailFlag(error.data.message));
         return;
     }
 

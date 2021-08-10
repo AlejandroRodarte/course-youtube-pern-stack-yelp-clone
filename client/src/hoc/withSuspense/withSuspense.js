@@ -1,7 +1,9 @@
 import { Suspense } from 'react';
 
+import Spinner from '../../components/ui/spinners/BasicSpinner';
+
 const withSuspense = (WrappedComponent) => (props) => (
-    <Suspense fallback={ <div>Loading...</div> }>
+    <Suspense fallback={ <Spinner /> }>
         <WrappedComponent { ...props } />
     </Suspense>
 );

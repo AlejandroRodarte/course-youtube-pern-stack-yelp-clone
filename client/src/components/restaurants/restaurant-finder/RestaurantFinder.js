@@ -7,13 +7,15 @@ import Header from './children/Header';
 import AddRestaurantForm from './children/AddRestaurantForm';
 import RestaurantList from './children/restaurant-list/RestaurantList';
 
-const RestaurantFinder = ({ restaurants, onFetchRestaurants }) => {
+import Spinner from './../../ui/spinners/BasicSpinner';
+
+const RestaurantFinder = ({ restaurants, loading, error, onFetchRestaurants }) => {
 
     useEffect(() => {
         onFetchRestaurants();
     }, [onFetchRestaurants]);
 
-    return (
+    let jsx = (
         <div>
             <Header />
             <AddRestaurantForm />
@@ -22,6 +24,20 @@ const RestaurantFinder = ({ restaurants, onFetchRestaurants }) => {
             />
         </div>
     );
+
+    if (loading) {
+        jsx = <Spinner />;
+    }
+
+    if (error) {
+        jsx = (
+            <div>
+                { error }
+            </div>
+        );
+    }
+
+    return jsx;
 
 };
 

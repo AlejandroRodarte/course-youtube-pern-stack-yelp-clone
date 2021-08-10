@@ -4,9 +4,9 @@ const getRestaurants = async () => {
 
     try {
         const response = await axios.get('/restaurants');
-        return [response, undefined];
+        return [response.data, undefined];
     } catch (e) {
-        return [undefined, e];
+        return [undefined, e.response.data];
     }
 
 };
