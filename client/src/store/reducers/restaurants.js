@@ -3,7 +3,8 @@ import * as types from '../types';
 const initialState = {
     restaurants: [],
     loading: false,
-    error: null
+    error: null,
+    selectedRestaurantId: '-1'
 };
 
 const restaurantsReducer = (state = initialState, action) => {
@@ -44,6 +45,11 @@ const restaurantsReducer = (state = initialState, action) => {
                 loading: false,
                 restaurants: state.restaurants.filter((restaurant) => restaurant.id !== action.payload.id),
                 error: null
+            };
+        case types.SELECT_RESTAURANT_ID:
+            return {
+                ...state,
+                selectedRestaurantId: action.payload.id
             };
         default:
             return state;

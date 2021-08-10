@@ -32,12 +32,20 @@ const deleteRestaurant = (id) => ({
     }
 });
 
+const selectRestaurantId = (id) => ({
+    type: types.SELECT_RESTAURANT_ID,
+    payload: {
+        id
+    }
+});
+
 const actions = {
     setRestaurantsLoadingFlag,
     setRestaurantsFailFlag,
     fetchRestaurants,
     addRestaurant,
-    deleteRestaurant
+    deleteRestaurant,
+    selectRestaurantId
 };
 
 export default actions;

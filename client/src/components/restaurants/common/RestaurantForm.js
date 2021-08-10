@@ -2,7 +2,8 @@ import { useForm } from 'react-hook-form';
 
 const RestaurantForm = ({
     onSubmit,
-    submitButtonLabel
+    submitButtonLabel,
+    restaurant
 }) => {
 
     const {
@@ -72,6 +73,7 @@ const RestaurantForm = ({
                             type="text"
                             className={ nameInputCssClasses }
                             placeholder="name"
+                            defaultValue={ restaurant ? restaurant.name : '' }
                             { ...register('name', validations.name) }
                         />
                         <label className="text-danger">
@@ -85,6 +87,7 @@ const RestaurantForm = ({
                             type="text"
                             className={ locationInputCssClasses }
                             placeholder="location"
+                            defaultValue={ restaurant ? restaurant.location : '' }
                             { ...register('location', validations.location) }
                         />
                         <label className="text-danger">
@@ -96,6 +99,7 @@ const RestaurantForm = ({
                     >
                         <select
                             className="form-select my-1 mr-sm-2"
+                            defaultValue={ restaurant ? restaurant.price_range : 1 }
                             { ...register('priceRange') }
                         >
                             <option disabled></option>

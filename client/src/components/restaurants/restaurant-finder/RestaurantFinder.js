@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import * as types from '../../../store/types';
 import { restaurantEffects } from '../../../store/effects';
+import { restaurantActions } from '../../../store/actions';
 
 import Header from './children/Header';
 import RestaurantList from './children/restaurant-list/RestaurantList';
@@ -18,6 +19,7 @@ const RestaurantFinder = ({
     onFetchRestaurants,
     onAddRestaurant,
     onDeleteRestaurant,
+    onSelectRestaurantId,
     match
 }) => {
 
@@ -27,7 +29,10 @@ const RestaurantFinder = ({
 
     const history = useHistory();
 
-    const onEditButtonClick = useCallback((id) => history.push(`${match.url}/${id}/update`), [history, match.url]);
+    const onEditButtonClick = useCallback((id) => {
+        onSelectRestaurantId(id);
+        history.push(`${match.url}/${id}/update`);
+    }, [history, match.url, onSelectRestaurantId]);
 
     let restaurantListJsx = (
         <RestaurantList 
@@ -67,7 +72,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     onFetchRestaurants: () => dispatch(restaurantEffects[types.START_FETCH_RESTAURANTS]()),
     onAddRestaurant: (restaurant) => dispatch(restaurantEffects[types.START_ADD_RESTAURANT](restaurant)),
-    onDeleteRestaurant: (id) => dispatch(restaurantEffects[types.START_DELETE_RESTAURANT](id))
+    onDeleteRestaurant: (id) => dispatch(restaurantEffects[types.START_DELETE_RESTAURANT](id)),
+    onSelectRestaurantId: (id) => dispatch(restaurantActions.selectRestaurantId(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantFinder);

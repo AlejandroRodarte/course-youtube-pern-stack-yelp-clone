@@ -9,3 +9,5 @@ export const ADD_RESTAURANT = 'restaurants/addRestaurant';
 
 export const START_DELETE_RESTAURANT = 'restaurants/startDeleteRestaurant';
 export const DELETE_RESTAURANT = 'restaurants/deleteRestaurant';
+
+export const SELECT_RESTAURANT_ID = 'restaurants/selectRestaurantId';
