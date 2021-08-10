@@ -15,29 +15,27 @@ const RestaurantFinder = ({ restaurants, loading, error, onFetchRestaurants }) =
         if (restaurants.length === 0) onFetchRestaurants();
     }, [restaurants.length, onFetchRestaurants]);
 
-    let jsx = (
-        <div>
-            <Header />
-            <AddRestaurantForm />
-            <RestaurantList 
-                restaurants={ restaurants }
-            />
-        </div>
+    let restaurantListJsx = (
+        <RestaurantList 
+            restaurants={ restaurants }
+        />
     );
 
     if (loading) {
-        jsx = <Spinner />;
+        restaurantListJsx = <Spinner />;
     }
 
     if (error) {
-        jsx = (
-            <div>
-                { error }
-            </div>
-        );
+        restaurantListJsx = error;
     }
 
-    return jsx;
+    return (
+        <div>
+            <Header />
+            <AddRestaurantForm />
+            { restaurantListJsx }
+        </div>
+    );
 
 };
 
