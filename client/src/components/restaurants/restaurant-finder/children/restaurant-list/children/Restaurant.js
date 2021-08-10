@@ -1,37 +1,49 @@
-const Restaurant = ({ restaurant }) => (
-    <tr>
+import { useCallback } from 'react';
 
-        <td>
-            { restaurant.name }
-        </td>
-        
-        <td>
-            { restaurant.location }
-        </td>
-        
-        <td>
-            { '$'.repeat(restaurant.price_range) }
-        </td>
-        
-        <td>Rating</td>
+const Restaurant = ({
+    restaurant,
+    onDeleteRestaurant
+}) => {
 
-        <td>
-            <button
-                className="btn btn-warning"
-            >
-                Update
-            </button>
-        </td>
+    const deleteRestaurant = useCallback(() => onDeleteRestaurant(restaurant.id), [onDeleteRestaurant, restaurant.id]);
 
-        <td>
-            <button
-                className="btn btn-danger"
-            >
-                Delete
-            </button>
-        </td>
+    return (
+        <tr>
+    
+            <td>
+                { restaurant.name }
+            </td>
+            
+            <td>
+                { restaurant.location }
+            </td>
+            
+            <td>
+                { '$'.repeat(restaurant.price_range) }
+            </td>
+            
+            <td>Rating</td>
+    
+            <td>
+                <button
+                    className="btn btn-warning"
+                >
+                    Update
+                </button>
+            </td>
+    
+            <td>
+                <button
+                    className="btn btn-danger"
+                    onClick={ deleteRestaurant }
+                >
+                    Delete
+                </button>
+            </td>
+    
+        </tr>
+    );
 
-    </tr>
-);
+};
 
 export default Restaurant;

@@ -38,6 +38,13 @@ const restaurantsReducer = (state = initialState, action) => {
                 ],
                 error: null
             };
+        case types.DELETE_RESTAURANT:
+            return {
+                ...state,
+                loading: false,
+                restaurants: state.restaurants.filter((restaurant) => restaurant.id !== action.payload.id),
+                error: null
+            };
         default:
             return state;
     }

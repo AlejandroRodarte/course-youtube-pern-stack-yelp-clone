@@ -1,3 +1,5 @@
+import * as types from '../types';
+
 import { restaurantActions } from '../actions';
 
 import restaurantsApi from './../../api/restaurants';
@@ -32,9 +34,25 @@ const startAddRestaurant = (restaurant) => async (dispatch) => {
 
 };
 
+const startDeleteRestaurant = (id) => async (dispatch) => {
+
+    dispatch(restaurantActions.setRestaurantsLoadingFlag());
+
+    const [response, error] = await restaurantsApi.deleteRestaurant(id);
+
+    if (error) {
+        dispatch(restaurantActions.setRestaurantsFailFlag(error.data.message));
+        return;
+    }
+
+    dispatch(restaurantActions.deleteRestaurant(response.data.id));
+
+};
+
 const effects = {
-    startFetchRestaurants,
-    startAddRestaurant
+    [types.START_FETCH_RESTAURANTS]: startFetchRestaurants,
+    [types.START_ADD_RESTAURANT]: startAddRestaurant,
+    [types.START_DELETE_RESTAURANT]: startDeleteRestaurant
 };
 
 export default effects;

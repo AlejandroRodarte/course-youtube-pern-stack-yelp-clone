@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
+import * as types from '../../../store/types';
 import { restaurantEffects } from '../../../store/effects';
 
 import Header from './children/Header';
@@ -9,7 +10,14 @@ import RestaurantList from './children/restaurant-list/RestaurantList';
 
 import Spinner from './../../ui/spinners/BasicSpinner';
 
-const RestaurantFinder = ({ restaurants, loading, error, onFetchRestaurants, onAddRestaurant }) => {
+const RestaurantFinder = ({
+    restaurants,
+    loading,
+    error,
+    onFetchRestaurants,
+    onAddRestaurant,
+    onDeleteRestaurant
+}) => {
 
     useEffect(() => {
         if (restaurants.length === 0) onFetchRestaurants();
@@ -18,6 +26,7 @@ const RestaurantFinder = ({ restaurants, loading, error, onFetchRestaurants, onA
     let restaurantListJsx = (
         <RestaurantList 
             restaurants={ restaurants }
+            onDeleteRestaurant={ onDeleteRestaurant }
         />
     );
 
@@ -48,8 +57,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onFetchRestaurants: () => dispatch(restaurantEffects.startFetchRestaurants()),
-    onAddRestaurant: (restaurant) => dispatch(restaurantEffects.startAddRestaurant(restaurant))
+    onFetchRestaurants: () => dispatch(restaurantEffects[types.START_FETCH_RESTAURANTS]()),
+    onAddRestaurant: (restaurant) => dispatch(restaurantEffects[types.START_ADD_RESTAURANT](restaurant)),
+    onDeleteRestaurant: (id) => dispatch(restaurantEffects[types.START_DELETE_RESTAURANT](id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantFinder);

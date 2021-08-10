@@ -24,7 +24,7 @@ const deleteRestaurant = async (req, res) => {
                 );
 
         res
-            .status(204)
+            .status(200)
             .send({
                 status: 'OK',
                 data: {

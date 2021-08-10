@@ -6,3 +6,6 @@ export const FETCH_RESTAURANTS = 'restaurants/fetchRestaurants';
 
 export const START_ADD_RESTAURANT = 'restaurants/startAddRestaurant';
 export const ADD_RESTAURANT = 'restaurants/addRestaurant';
+
+export const START_DELETE_RESTAURANT = 'restaurants/startDeleteRestaurant';
+export const DELETE_RESTAURANT = 'restaurants/deleteRestaurant';
