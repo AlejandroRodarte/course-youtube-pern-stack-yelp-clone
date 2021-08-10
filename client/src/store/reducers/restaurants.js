@@ -10,13 +10,24 @@ const restaurantsReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case types.SET_RESTAURANTS_LOADING_FLAG:
-            return state;
+            return {
+                ...state,
+                loading: true,
+                error: null
+            };
         case types.SET_RESTAURANTS_FAIL_FLAG:
-            return state;
-        case types.START_FETCH_RESTAURANTS:
-            return state;
+            return {
+                ...state,
+                loading: false,
+                error: action.payload.error
+            };
         case types.FETCH_RESTAURANTS:
-            return state;
+            return {
+                ...state,
+                loading: false,
+                restaurants: action.payload.restaurants,
+                error: null
+            };
         default:
             return state;
     }

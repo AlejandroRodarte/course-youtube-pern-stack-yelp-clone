@@ -1,15 +1,19 @@
+import { restaurantActions } from '../actions';
+
+import restaurantsApi from './../../api/restaurants';
+
 const startFetchRestaurants = () => async (dispatch) => {
 
-    const data = await new Promise((res, rej) => res([
-        {
-            id: 2,
-            name: 'Taco Bell',
-            location: 'Montana',
-            price_range: 4
-        }
-    ]));
+    dispatch(restaurantActions.setRestaurantsLoadingFlag());
 
-    return data;
+    const [{ data: response }, error] = await restaurantsApi.getRestaurants();
+
+    if (error) {
+        dispatch(restaurantActions.setRestaurantsFailFlag(error));
+        return;
+    }
+
+    dispatch(restaurantActions.fetchRestaurants(response.data.restaurants));
 
 };
 

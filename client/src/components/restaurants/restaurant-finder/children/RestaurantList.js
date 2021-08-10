@@ -1,4 +1,4 @@
-const RestaurantList = () => (
+const RestaurantList = ({ restaurants }) => (
     <div
         className="list-group"
     >
@@ -42,30 +42,43 @@ const RestaurantList = () => (
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                {
+                    restaurants.map((restaurant) => (
+                        <tr>
 
-                    <td>McDonalds</td>
-                    <td>New York</td>
-                    <td>$$$</td>
-                    <td>Rating</td>
+                            <td>
+                                { restaurant.name }
+                            </td>
+                            
+                            <td>
+                                { restaurant.location }
+                            </td>
+                            
+                            <td>
+                                { '$'.repeat(restaurant.price_range) }
+                            </td>
+                            
+                            <td>Rating</td>
 
-                    <td>
-                        <button
-                            className="btn btn-warning"
-                        >
-                            Update
-                        </button>
-                    </td>
+                            <td>
+                                <button
+                                    className="btn btn-warning"
+                                >
+                                    Update
+                                </button>
+                            </td>
 
-                    <td>
-                        <button
-                            className="btn btn-danger"
-                        >
-                            Delete
-                        </button>
-                    </td>
+                            <td>
+                                <button
+                                    className="btn btn-danger"
+                                >
+                                    Delete
+                                </button>
+                            </td>
 
-                </tr>
+                        </tr>
+                    ))
+                }
             </tbody>
         </table>
     </div>
