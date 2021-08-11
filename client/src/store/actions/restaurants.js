@@ -32,11 +32,29 @@ const deleteRestaurant = (id) => ({
     }
 });
 
-const selectRestaurantId = (id) => ({
-    type: types.SELECT_RESTAURANT_ID,
+const selectRestaurant = (id) => ({
+    type: types.SELECT_RESTAURANT,
     payload: {
         id
     }
+});
+
+const fetchRestaurant = (restaurant) => ({
+    type: types.FETCH_RESTAURANT,
+    payload: {
+        restaurant
+    }
+});
+
+const updateRestaurant = (restaurant) => ({
+    type: types.UPDATE_RESTAURANT,
+    payload: {
+        restaurant
+    }
+});
+
+const clearRestaurantsError = () => ({
+    type: types.CLEAR_RESTAURANTS_ERROR
 });
 
 const actions = {
@@ -45,7 +63,10 @@ const actions = {
     fetchRestaurants,
     addRestaurant,
     deleteRestaurant,
-    selectRestaurantId
+    selectRestaurant,
+    fetchRestaurant,
+    updateRestaurant,
+    clearRestaurantsError
 };
 
 export default actions;

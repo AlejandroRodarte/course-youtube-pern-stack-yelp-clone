@@ -19,7 +19,7 @@ const RestaurantFinder = ({
     onFetchRestaurants,
     onAddRestaurant,
     onDeleteRestaurant,
-    onSelectRestaurantId,
+    onSelectRestaurant,
     match
 }) => {
 
@@ -30,9 +30,9 @@ const RestaurantFinder = ({
     const history = useHistory();
 
     const onEditButtonClick = useCallback((id) => {
-        onSelectRestaurantId(id);
+        onSelectRestaurant(id);
         history.push(`${match.url}/${id}/update`);
-    }, [history, match.url, onSelectRestaurantId]);
+    }, [history, match.url, onSelectRestaurant]);
 
     let restaurantListJsx = (
         <RestaurantList 
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
     onFetchRestaurants: () => dispatch(restaurantEffects[types.START_FETCH_RESTAURANTS]()),
     onAddRestaurant: (restaurant) => dispatch(restaurantEffects[types.START_ADD_RESTAURANT](restaurant)),
     onDeleteRestaurant: (id) => dispatch(restaurantEffects[types.START_DELETE_RESTAURANT](id)),
-    onSelectRestaurantId: (id) => dispatch(restaurantActions.selectRestaurantId(id))
+    onSelectRestaurant: (id) => dispatch(restaurantActions.selectRestaurant(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantFinder);

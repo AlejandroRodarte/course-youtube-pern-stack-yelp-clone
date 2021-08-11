@@ -49,10 +49,43 @@ const startDeleteRestaurant = (id) => async (dispatch) => {
 
 };
 
+const startFetchRestaurant = (id) => async (dispatch) => {
+
+    dispatch(restaurantActions.setRestaurantsLoadingFlag());
+
+    const [response, error] = await restaurantsApi.getRestaurant(id);
+
+    if (error) {
+        dispatch(restaurantActions.setRestaurantsFailFlag(error.data.message));
+        return;
+    }
+
+    dispatch(restaurantActions.fetchRestaurant(response.data.restaurant));
+
+};
+
+const startUpdateRestaurant = (id, restaurant) => async (dispatch) => {
+
+    dispatch(restaurantActions.setRestaurantsLoadingFlag());
+
+    const [response, error] = await restaurantsApi.updateRestaurant(id, restaurant);
+
+    if (error) {
+        dispatch(restaurantActions.setRestaurantsFailFlag(error.data.message));
+        return error;
+    }
+
+    dispatch(restaurantActions.updateRestaurant(response.data.restaurant));
+    return undefined;
+
+};
+
 const effects = {
     [types.START_FETCH_RESTAURANTS]: startFetchRestaurants,
     [types.START_ADD_RESTAURANT]: startAddRestaurant,
-    [types.START_DELETE_RESTAURANT]: startDeleteRestaurant
+    [types.START_DELETE_RESTAURANT]: startDeleteRestaurant,
+    [types.START_FETCH_RESTAURANT]: startFetchRestaurant,
+    [types.START_UPDATE_RESTAURANT]: startUpdateRestaurant
 };
 
 export default effects;

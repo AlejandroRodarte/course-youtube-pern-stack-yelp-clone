@@ -4,7 +4,7 @@ const initialState = {
     restaurants: [],
     loading: false,
     error: null,
-    selectedRestaurantId: '-1'
+    selectedRestaurant: undefined
 };
 
 const restaurantsReducer = (state = initialState, action) => {
@@ -46,10 +46,42 @@ const restaurantsReducer = (state = initialState, action) => {
                 restaurants: state.restaurants.filter((restaurant) => restaurant.id !== action.payload.id),
                 error: null
             };
-        case types.SELECT_RESTAURANT_ID:
+        case types.SELECT_RESTAURANT:
             return {
                 ...state,
-                selectedRestaurantId: action.payload.id
+                selectedRestaurant: state.restaurants.find((restaurant) => restaurant.id === action.payload.id),
+                error: null
+            };
+        case types.FETCH_RESTAURANT:
+            return {
+                ...state,
+                loading: false,
+                selectedRestaurant: action.payload.restaurant,
+                error: null
+            };
+        case types.UPDATE_RESTAURANT: {
+
+            const isListLoaded = state.restaurants.length !== 0;
+
+            return {
+                ...state,
+                loading: false,
+                selectedRestaurant: undefined,
+                restaurants: !isListLoaded ?
+                    state.restaurants :
+                    state.restaurants.map(
+                        (restaurant) => restaurant.id === action.payload.restaurant.id ?
+                            { ...restaurant, ...action.payload.restaurant } :
+                            restaurant
+                    ),
+                error: null
+            };
+
+        }
+        case types.CLEAR_RESTAURANTS_ERROR:
+            return {
+                ...state,
+                error: null
             };
         default:
             return state;
