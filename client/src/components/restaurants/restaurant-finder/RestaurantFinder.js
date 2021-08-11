@@ -29,6 +29,11 @@ const RestaurantFinder = ({
 
     const history = useHistory();
 
+    const onRecordClick = useCallback((id) => {
+        onSelectRestaurant(id);
+        history.push(`${match.url}/${id}`);
+    }, [onSelectRestaurant, history, match]);
+
     const onEditButtonClick = useCallback((id) => {
         onSelectRestaurant(id);
         history.push(`${match.url}/${id}/update`);
@@ -39,6 +44,7 @@ const RestaurantFinder = ({
             restaurants={ restaurants }
             onDeleteButtonClick={ onDeleteRestaurant }
             onEditButtonClick={ onEditButtonClick }
+            onRecordClick={ onRecordClick }
         />
     );
 

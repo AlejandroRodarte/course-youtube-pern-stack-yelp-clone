@@ -3,14 +3,26 @@ import { useCallback } from 'react';
 const Restaurant = ({
     restaurant,
     onDeleteButtonClick,
-    onEditButtonClick
+    onEditButtonClick,
+    onRecordClick
 }) => {
 
-    const deleteButtonClick = useCallback(() => onDeleteButtonClick(restaurant.id), [onDeleteButtonClick, restaurant.id]);
-    const editButtonClick = useCallback(() => onEditButtonClick(restaurant.id), [onEditButtonClick, restaurant.id]);
+    const onClick = useCallback(() => onRecordClick(restaurant.id), [onRecordClick, restaurant.id]);
+    
+    const deleteButtonClick = useCallback((e) => {
+        e.stopPropagation();
+        onDeleteButtonClick(restaurant.id);
+    }, [onDeleteButtonClick, restaurant.id]);
+
+    const editButtonClick = useCallback((e) => {
+        e.stopPropagation();
+        onEditButtonClick(restaurant.id);
+    }, [onEditButtonClick, restaurant.id]);
 
     return (
-        <tr>
+        <tr
+            onClick={ onClick }
+        >
     
             <td>
                 { restaurant.name }
