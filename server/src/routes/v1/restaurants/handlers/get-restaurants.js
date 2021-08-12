@@ -1,13 +1,43 @@
 const getRestaurants = async (req, res) => {
 
+    const knex = req.app.get('queryBuilder');
+
+    const averageRatingCase =
+        knex.raw(`
+            CASE WHEN AVG(rating) IS NULL
+                THEN '0.00'
+                ELSE TO_CHAR(AVG(rating), 'FM999999999.00')
+                END AS average_rating
+        `);
+
     try {
 
         const rows = 
-            await req
-                    .app
-                    .get('queryBuilder')
-                    .select('*')
-                    .from('restaurants');
+            await knex
+                    .select(
+                        'restaurants.id',
+                        'restaurants.name',
+                        'restaurants.location',
+                        'restaurants.price_range',
+                        averageRatingCase
+                    )
+                    .from('restaurants')
+                    .leftJoin(
+                        'reviews',
+                        'restaurants.id',
+                        'reviews.restaurant_id'
+                    )
+                    .groupBy('restaurants.id')
+                    .orderBy([
+                        {
+                            column: 'average_rating',
+                            order: 'desc'
+                        },
+                        {
+                            column: 'name',
+                            order: 'asc'
+                        }
+                    ]);
     
         res
             .status(200)
