@@ -66,7 +66,6 @@ const restaurantsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                selectedRestaurant: undefined,
                 restaurants: !isListLoaded ?
                     state.restaurants :
                     state.restaurants.map(
@@ -82,6 +81,11 @@ const restaurantsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: null
+            };
+        case types.CLEAR_SELECTED_RESTAURANT:
+            return {
+                ...state,
+                selectedRestaurant: undefined
             };
         default:
             return state;

@@ -19,3 +19,4 @@ export const START_UPDATE_RESTAURANT = 'restaurants/startUpdateRestaurant';
 export const UPDATE_RESTAURANT = 'restaurants/updateRestaurant';
 
 export const CLEAR_RESTAURANTS_ERROR = 'restaurants/clearRestaurantsError';
+export const CLEAR_SELECTED_RESTAURANT = 'restaurants/clearSelectedRestaurant';

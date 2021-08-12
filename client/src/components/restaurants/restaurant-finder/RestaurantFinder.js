@@ -16,16 +16,19 @@ const RestaurantFinder = ({
     restaurants,
     loading,
     error,
+    selectedRestaurantExists,
     onFetchRestaurants,
     onAddRestaurant,
     onDeleteRestaurant,
     onSelectRestaurant,
+    onClearSelectedRestaurant,
     match
 }) => {
 
     useEffect(() => {
         if (restaurants.length === 0) onFetchRestaurants();
-    }, [restaurants.length, onFetchRestaurants]);
+        if (selectedRestaurantExists) onClearSelectedRestaurant();
+    }, [restaurants.length, onFetchRestaurants, selectedRestaurantExists, onClearSelectedRestaurant]);
 
     const history = useHistory();
 
@@ -72,14 +75,16 @@ const RestaurantFinder = ({
 const mapStateToProps = (state) => ({
     restaurants: state.restaurants.restaurants,
     loading: state.restaurants.loading,
-    error: state.restaurants.error
+    error: state.restaurants.error,
+    selectedRestaurantExists: state.restaurants.selectedRestaurant !== undefined
 });
 
 const mapDispatchToProps = (dispatch) => ({
     onFetchRestaurants: () => dispatch(restaurantEffects[types.START_FETCH_RESTAURANTS]()),
     onAddRestaurant: (restaurant) => dispatch(restaurantEffects[types.START_ADD_RESTAURANT](restaurant)),
     onDeleteRestaurant: (id) => dispatch(restaurantEffects[types.START_DELETE_RESTAURANT](id)),
-    onSelectRestaurant: (id) => dispatch(restaurantActions.selectRestaurant(id))
+    onSelectRestaurant: (id) => dispatch(restaurantActions.selectRestaurant(id)),
+    onClearSelectedRestaurant: () => dispatch(restaurantActions.clearSelectedRestaurant())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantFinder);

@@ -57,6 +57,10 @@ const clearRestaurantsError = () => ({
     type: types.CLEAR_RESTAURANTS_ERROR
 });
 
+const clearSelectedRestaurant = () => ({
+    type: types.CLEAR_SELECTED_RESTAURANT
+});
+
 const actions = {
     setRestaurantsLoadingFlag,
     setRestaurantsFailFlag,
@@ -66,7 +70,8 @@ const actions = {
     selectRestaurant,
     fetchRestaurant,
     updateRestaurant,
-    clearRestaurantsError
+    clearRestaurantsError,
+    clearSelectedRestaurant
 };
 
 export default actions;
