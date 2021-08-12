@@ -1,6 +1,7 @@
 const getRestaurant = async (req, res) => {
 
     const id = req.params.id;
+    const fieldsToPopulate = req.query.populateFields ? req.query.populateFields.split(',') : [];
 
     if (isNaN(id)) {
         return res
@@ -35,6 +36,28 @@ const getRestaurant = async (req, res) => {
                             message: 'No restaurant was found.'
                         }
                     });
+        }
+
+        for (const field of fieldsToPopulate) {
+            switch (field) {
+                case 'reviews': {
+
+                    const { rows: reviews } =
+                            await req
+                                    .app
+                                    .get('db')
+                                    .query(
+                                        'SELECT * FROM reviews WHERE restaurant_id = $1',
+                                        [restaurant.id]
+                                    );
+
+                    restaurant.reviews = reviews;
+                    
+                    break;
+                }
+                default:
+                    break;
+            }
         }
 
         res.status(200).send({
