@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import * as types from '../../../store/types';
 import { restaurantEffects } from '../../../store/effects';
 
+import ReviewList from './../../reviews/review-list/ReviewList';
+
 const RestaurantReviews = ({
     selectedRestaurant,
     error,
@@ -20,11 +22,23 @@ const RestaurantReviews = ({
 
     return (
         <div>
-            <h1
-                className="text-center display-1"
-            >
-                { selectedRestaurant && selectedRestaurant.name }
-            </h1>
+            {
+                selectedRestaurant &&
+                (
+                    <>
+                        <h1
+                            className="text-center display-1"
+                        >
+                            { selectedRestaurant.name }
+                        </h1>
+                        <div
+                            className="m-2"
+                        >
+                            <ReviewList />
+                        </div>
+                    </>
+                )
+            }
         </div>
     );
 
