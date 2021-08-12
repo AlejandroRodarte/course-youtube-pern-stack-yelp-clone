@@ -61,6 +61,13 @@ const clearSelectedRestaurant = () => ({
     type: types.CLEAR_SELECTED_RESTAURANT
 });
 
+const fetchRestaurantReviews = (reviews) => ({
+    type: types.FETCH_RESTAURANT_REVIEWS,
+    payload: {
+        reviews
+    }
+});
+
 const actions = {
     setRestaurantsLoadingFlag,
     setRestaurantsFailFlag,
@@ -71,7 +78,8 @@ const actions = {
     fetchRestaurant,
     updateRestaurant,
     clearRestaurantsError,
-    clearSelectedRestaurant
+    clearSelectedRestaurant,
+    fetchRestaurantReviews
 };
 
 export default actions;

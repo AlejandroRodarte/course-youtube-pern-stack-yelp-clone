@@ -56,7 +56,10 @@ const restaurantsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                selectedRestaurant: action.payload.restaurant,
+                selectedRestaurant: {
+                    ...state.selectedRestaurant,
+                    ...action.payload.restaurant
+                },
                 error: null
             };
         case types.UPDATE_RESTAURANT: {
@@ -86,6 +89,16 @@ const restaurantsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 selectedRestaurant: undefined
+            };
+        case types.FETCH_RESTAURANT_REVIEWS:
+            return {
+                ...state,
+                loading: false,
+                selectedRestaurant: {
+                    ...state.selectedRestaurant,
+                    reviews: action.payload.reviews
+                },
+                error: null
             };
         default:
             return state;

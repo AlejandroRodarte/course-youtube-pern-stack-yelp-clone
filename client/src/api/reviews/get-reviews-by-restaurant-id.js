@@ -1,9 +1,9 @@
 import axios from '../../axios/axios-restaurants';
 
-const getRestaurant = async (id, params = {}) => {
+const getReviewsByRestaurantId = async (id) => {
 
     try {
-        const response = await axios.get(`/restaurants/${id}`, { params });
+        const response = await axios.get(`/reviews/restaurant/${id}`);
         return [response.data, undefined];
     } catch (e) {
         return [undefined, e.response.data];
@@ -11,4 +11,4 @@ const getRestaurant = async (id, params = {}) => {
 
 };
 
-export default getRestaurant;
+export default getReviewsByRestaurantId;

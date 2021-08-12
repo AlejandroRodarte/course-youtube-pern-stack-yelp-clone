@@ -20,3 +20,6 @@ export const UPDATE_RESTAURANT = 'restaurants/updateRestaurant';
 
 export const CLEAR_RESTAURANTS_ERROR = 'restaurants/clearRestaurantsError';
 export const CLEAR_SELECTED_RESTAURANT = 'restaurants/clearSelectedRestaurant';
+
+export const START_FETCH_RESTAURANT_REVIEWS = 'restaurants/startFetchRestaurantReviews';
+export const FETCH_RESTAURANT_REVIEWS = 'restaurants/startFetchRestaurantReviews';

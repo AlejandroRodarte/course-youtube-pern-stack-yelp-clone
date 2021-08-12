@@ -2,7 +2,7 @@ import * as types from '../types';
 
 import { restaurantActions } from '../actions';
 
-import restaurantsApi from './../../api/restaurants';
+import { restaurantsApi, reviewsApi } from './../../api';
 
 const startFetchRestaurants = () => async (dispatch) => {
 
@@ -49,11 +49,11 @@ const startDeleteRestaurant = (id) => async (dispatch) => {
 
 };
 
-const startFetchRestaurant = (id) => async (dispatch) => {
+const startFetchRestaurant = (id, params = {}) => async (dispatch) => {
 
     dispatch(restaurantActions.setRestaurantsLoadingFlag());
 
-    const [response, error] = await restaurantsApi.getRestaurant(id);
+    const [response, error] = await restaurantsApi.getRestaurant(id, params);
 
     if (error) {
         dispatch(restaurantActions.setRestaurantsFailFlag(error.data.message));
@@ -80,12 +80,27 @@ const startUpdateRestaurant = (id, restaurant) => async (dispatch) => {
 
 };
 
+const startFetchRestaurantReviews = (id) => async (dispatch) => {
+    
+    dispatch(restaurantActions.setRestaurantsLoadingFlag());
+
+    const [response, error] = await reviewsApi.getReviewsByRestaurantId(id);
+
+    if (error) {
+        dispatch(restaurantActions.setRestaurantsFailFlag(error.data.message));
+    }
+
+    dispatch(restaurantActions.fetchRestaurantReviews(response.data.reviews));
+
+};
+
 const effects = {
     [types.START_FETCH_RESTAURANTS]: startFetchRestaurants,
     [types.START_ADD_RESTAURANT]: startAddRestaurant,
     [types.START_DELETE_RESTAURANT]: startDeleteRestaurant,
     [types.START_FETCH_RESTAURANT]: startFetchRestaurant,
-    [types.START_UPDATE_RESTAURANT]: startUpdateRestaurant
+    [types.START_UPDATE_RESTAURANT]: startUpdateRestaurant,
+    [types.START_FETCH_RESTAURANT_REVIEWS]: startFetchRestaurantReviews
 };
 
 export default effects;
