@@ -17,11 +17,10 @@ const deleteRestaurant = async (req, res) => {
         
         await req
                 .app
-                .get('db')
-                .query(
-                    'DELETE FROM restaurants WHERE id = $1',
-                    [id]
-                );
+                .get('queryBuilder')
+                .delete()
+                .from('restaurants')
+                .where('id', id);
 
         res
             .status(200)

@@ -1,19 +1,18 @@
 const addRestaurant = async (req, res) => {
 
-    const { name, location, priceRange } = req.body.data.restaurant;
+    const { name, location, priceRange: price_range } = req.body.data.restaurant;
 
     try {
         
-        const query = 
+        const rows = 
             await req
                     .app
-                    .get('db')
-                    .query(
-                        'INSERT INTO restaurants (name, location, price_range) values ($1, $2, $3) RETURNING *',
-                        [name, location, priceRange]
-                    );
+                    .get('queryBuilder')
+                    .insert({ name, location, price_range })
+                    .into('restaurants')
+                    .returning('*');
 
-        const [newRestaurant] = query.rows;
+        const [newRestaurant] = rows;
 
         res
             .status(201)

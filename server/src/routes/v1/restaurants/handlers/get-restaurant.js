@@ -16,16 +16,15 @@ const getRestaurant = async (req, res) => {
 
     try {
 
-        const query = 
+        const rows =
             await req
                     .app
-                    .get('db')
-                    .query(
-                        'SELECT * FROM restaurants WHERE id = $1',
-                        [+id]
-                    );
+                    .get('queryBuilder')
+                    .select('*')
+                    .from('restaurants')
+                    .where('id', +id);
 
-        const [restaurant] = query.rows;
+        const [restaurant] = rows;
 
         if (!restaurant) {
             return res
@@ -42,16 +41,15 @@ const getRestaurant = async (req, res) => {
             switch (field) {
                 case 'reviews': {
 
-                    const { rows: reviews } =
-                            await req
-                                    .app
-                                    .get('db')
-                                    .query(
-                                        'SELECT * FROM reviews WHERE restaurant_id = $1',
-                                        [restaurant.id]
-                                    );
+                    const rows =
+                        await req
+                                .app
+                                .get('queryBuilder')
+                                .select('*')
+                                .from('reviews')
+                                .where('restaurant_id', restaurant.id);
 
-                    restaurant.reviews = reviews;
+                    restaurant.reviews = rows;
                     
                     break;
                 }

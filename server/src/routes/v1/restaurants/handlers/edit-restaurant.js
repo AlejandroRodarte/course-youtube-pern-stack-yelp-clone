@@ -13,20 +13,19 @@ const editRestaurant = async (req, res) => {
                 });
     }
 
-    const { name, location, priceRange } = req.body.data.restaurant;
+    const { name, location, priceRange: price_range } = req.body.data.restaurant;
 
     try {
         
-        const query = 
+        const rows = 
             await req
                     .app
-                    .get('db')
-                    .query(
-                        'UPDATE restaurants SET name = $1, location = $2, price_range = $3 WHERE id = $4 RETURNING *',
-                        [name, location, priceRange, id]
-                    );
+                    .get('queryBuilder')('restaurants')
+                    .update({ name, location, price_range })
+                    .where('id', id)
+                    .returning('*');
 
-        const [updatedRestaurant] = query.rows;
+        const [updatedRestaurant] = rows;
 
         res
             .status(201)

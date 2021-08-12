@@ -2,13 +2,12 @@ const getRestaurants = async (req, res) => {
 
     try {
 
-        const query = 
+        const rows = 
             await req
                     .app
-                    .get('db')
-                    .query('SELECT * FROM restaurants');
-    
-        const { rows } = query;
+                    .get('queryBuilder')
+                    .select('*')
+                    .from('restaurants');
     
         res
             .status(200)

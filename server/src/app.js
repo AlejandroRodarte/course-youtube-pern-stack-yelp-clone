@@ -3,11 +3,11 @@ const morgan = require('morgan');
 const cors = require('cors');
 
 const routes = require('./routes');
-const db = require('./db');
+const knex = require('./db/knex');
 
 const app = express();
 
-app.set('db', db);
+app.set('queryBuilder', knex);
 
 app.use(cors());
 app.use(morgan('dev'));

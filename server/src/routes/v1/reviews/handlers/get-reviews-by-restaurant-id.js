@@ -15,19 +15,18 @@ const getReviewsByRestaurantId = async (req, res) => {
 
     try {
 
-        const { rows: reviews } =
+        const rows =
             await req
                     .app
-                    .get('db')
-                    .query(
-                        'SELECT * FROM reviews WHERE restaurant_id = $1',
-                        [+id]
-                    );
+                    .get('queryBuilder')
+                    .select('*')
+                    .from('reviews')
+                    .where('restaurant_id', id);
 
         res.status(200).send({
             status: 'OK',
             data: {
-                reviews
+                reviews: rows
             }
         });
 
