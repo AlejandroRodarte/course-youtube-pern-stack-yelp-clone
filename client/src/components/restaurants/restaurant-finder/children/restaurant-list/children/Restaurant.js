@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
 
+import StarRating from './../../../../../ui/metrics/StarRating';
+
 const Restaurant = ({
     restaurant,
     onDeleteButtonClick,
@@ -36,7 +38,30 @@ const Restaurant = ({
                 { '$'.repeat(restaurant.price_range) }
             </td>
             
-            <td>Rating</td>
+            <td>
+                {
+                    +restaurant.review_count === 0 ?
+                    (
+                        <span
+                            className="text-warning"
+                        >
+                            No reviews
+                        </span>
+                    ) :
+                    (
+                        <>
+                            <StarRating
+                                rating={ +restaurant.average_rating }
+                            />
+                            <span
+                                className="mx-2 text-warning"
+                            >
+                                ({ restaurant.review_count})
+                            </span>
+                        </>
+                    )
+                }
+            </td>
     
             <td>
                 <button

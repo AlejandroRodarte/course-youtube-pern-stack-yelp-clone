@@ -21,6 +21,9 @@ const getRestaurants = async (req, res) => {
                         'restaurants.price_range',
                         averageRatingCase
                     )
+                    .count({
+                        review_count: 'reviews.id'
+                    })
                     .from('restaurants')
                     .leftJoin(
                         'reviews',
