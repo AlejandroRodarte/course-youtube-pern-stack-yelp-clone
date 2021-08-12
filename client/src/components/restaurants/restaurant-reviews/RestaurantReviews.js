@@ -6,6 +6,7 @@ import * as types from '../../../store/types';
 import { restaurantEffects } from '../../../store/effects';
 
 import ReviewList from './../../reviews/review-list/ReviewList';
+import ReviewForm from './../../reviews/review-form/ReviewForm';
 
 const RestaurantReviews = ({
     selectedRestaurant,
@@ -36,6 +37,7 @@ const RestaurantReviews = ({
                         >
                             <ReviewList />
                         </div>
+                        <ReviewForm />
                     </>
                 )
             }
