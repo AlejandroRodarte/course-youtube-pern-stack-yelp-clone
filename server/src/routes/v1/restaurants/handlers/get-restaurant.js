@@ -1,7 +1,11 @@
+const { partialQueries } = require('../../../../db/restaurants');
+
 const getRestaurant = async (req, res) => {
 
     const id = req.params.id;
     const fieldsToPopulate = req.query.populateFields ? req.query.populateFields.split(',') : [];
+
+    const knex = req.app.get('queryBuilder');
 
     if (isNaN(id)) {
         return res
@@ -17,12 +21,9 @@ const getRestaurant = async (req, res) => {
     try {
 
         const rows =
-            await req
-                    .app
-                    .get('queryBuilder')
-                    .select('*')
-                    .from('restaurants')
-                    .where('id', +id);
+            await partialQueries
+                    .getRestaurantsWithAverageRatingAndReviewCount(knex)
+                    .where('restaurants.id', id);
 
         const [restaurant] = rows;
 
