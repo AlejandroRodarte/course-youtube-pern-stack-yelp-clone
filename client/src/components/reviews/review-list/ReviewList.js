@@ -1,13 +1,18 @@
-import ReviewCard from "./children/ReviewCard";
+import ReviewCard from './children/ReviewCard';
 
-const ReviewList = () => (
+const ReviewList = ({ reviews }) => (
     <div
         className="row row-cols-3 mb-2"
     >
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
-        <ReviewCard />
+        {
+            reviews.map(
+                (review) => 
+                    <ReviewCard
+                        key={ review.id }
+                        review={ review }
+                    />
+            )
+        }
     </div>
 );
 

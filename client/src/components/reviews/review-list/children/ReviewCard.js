@@ -1,6 +1,6 @@
 import StarRating from './../../../ui/metrics/StarRating';
 
-const ReviewCard = () => (
+const ReviewCard = ({ review }) => (
     <div
         className="card text-white bg-primary mb-3 mx-2"
         style={{ maxWidth: '30%' }}
@@ -9,12 +9,12 @@ const ReviewCard = () => (
             className="card-header d-flex justify-content-between"
         >
             <span>
-                Joan
+                { review.name }
             </span>
 
             <span>
                 <StarRating
-                    rating={ 3.5 }
+                    rating={ review.rating }
                 />
             </span>
         </div>
@@ -24,7 +24,7 @@ const ReviewCard = () => (
             <p
                 className="card-text"
             >
-                This restaurant is awesome.
+                { review.review }
             </p>
         </div>
     </div>

@@ -1,4 +1,4 @@
-import Restaurant from "./children/Restaurant";
+import Restaurant from './children/Restaurant';
 
 const RestaurantList = ({
     restaurants,

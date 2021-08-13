@@ -1,4 +1,4 @@
-import getReviewsByRestaurantId from "./get-reviews-by-restaurant-id";
+import getReviewsByRestaurantId from './get-reviews-by-restaurant-id';
 
 const api = {
     getReviewsByRestaurantId

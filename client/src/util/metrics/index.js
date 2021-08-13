@@ -1,4 +1,4 @@
-import generateStarIcons from "./generate-star-icons";
+import generateStarIcons from './generate-star-icons';
 
 const metrics = {
     generateStarIcons

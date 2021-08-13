@@ -63,9 +63,17 @@ const RestaurantReviews = ({
             <div
                 className="m-2"
             >
-                <ReviewList />
+                {
+                    (restaurant.reviews && restaurant.reviews.length > 0) ?
+                    <ReviewList
+                        reviews={ restaurant.reviews }
+                    /> :
+                    <p>
+                        No reviews. Be the first one to post your opinion!
+                    </p>
+                }
             </div>
-            <ReviewForm />
+            <ReviewForm/>
         </>
     );
 
