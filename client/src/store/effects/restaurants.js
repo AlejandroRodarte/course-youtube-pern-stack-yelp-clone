@@ -12,10 +12,11 @@ const startFetchRestaurants = () => async (dispatch) => {
 
     if (error) {
         dispatch(restaurantActions.setRestaurantsFailFlag(error.data.message));
-        return;
+        return error;
     }
 
     dispatch(restaurantActions.fetchRestaurants(response.data.restaurants));
+    return undefined;
 
 };
 
@@ -94,13 +95,24 @@ const startFetchRestaurantReviews = (id) => async (dispatch) => {
 
 };
 
+const startFetchRestaurantsAndSetReviews = () => async (dispatch) => {
+
+    const error = await dispatch(startFetchRestaurants());
+    if (error) return;
+
+    dispatch(restaurantActions.setReviewsFromFetchedRestaurant());
+    dispatch(restaurantActions.clearFetchedRestaurant());
+
+};
+
 const effects = {
     [types.START_FETCH_RESTAURANTS]: startFetchRestaurants,
     [types.START_ADD_RESTAURANT]: startAddRestaurant,
     [types.START_DELETE_RESTAURANT]: startDeleteRestaurant,
     [types.START_FETCH_RESTAURANT]: startFetchRestaurant,
     [types.START_UPDATE_RESTAURANT]: startUpdateRestaurant,
-    [types.START_FETCH_RESTAURANT_REVIEWS]: startFetchRestaurantReviews
+    [types.START_FETCH_RESTAURANT_REVIEWS]: startFetchRestaurantReviews,
+    [types.START_FETCH_RESTAURANTS_AND_SET_REVIEWS]: startFetchRestaurantsAndSetReviews
 };
 
 export default effects;

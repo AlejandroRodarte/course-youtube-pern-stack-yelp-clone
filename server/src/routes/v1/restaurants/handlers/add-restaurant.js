@@ -20,7 +20,11 @@ const addRestaurant = async (req, res) => {
                 status: 'OK',
                 data: {
                     message: 'A new restaurant has been created.',
-                    restaurant: newRestaurant
+                    restaurant: {
+                        ...newRestaurant,
+                        review_count: 0,
+                        average_rating: '0.00'
+                    }
                 }
             });
 

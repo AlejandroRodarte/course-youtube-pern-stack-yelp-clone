@@ -13,34 +13,67 @@ import RestaurantForm from '../common/RestaurantForm';
 import Spinner from './../../ui/spinners/BasicSpinner';
 
 const RestaurantFinder = ({
+    areRestaurantsLoaded,
     restaurants,
+    fetchedRestaurant,
     loading,
     error,
-    selectedRestaurantExists,
+    selectedRestaurantIdExists,
     onFetchRestaurants,
+    onFetchRestaurantsAndSetReviews,
     onAddRestaurant,
     onDeleteRestaurant,
-    onSelectRestaurant,
-    onClearSelectedRestaurant,
-    match
+    onSelectRestaurantId,
+    onClearSelectedRestaurantId,
+    onClearFetchedRestaurant,
+    match,
+    location
 }) => {
 
     useEffect(() => {
-        if (restaurants.length === 0) onFetchRestaurants();
-        if (selectedRestaurantExists) onClearSelectedRestaurant();
-    }, [restaurants.length, onFetchRestaurants, selectedRestaurantExists, onClearSelectedRestaurant]);
+        
+        const { from: fromPath = 'none' } = location.state || {};
+
+        switch (fromPath) {
+            case 'reviews':
+                if (!areRestaurantsLoaded) {
+                    if (fetchedRestaurant) onFetchRestaurantsAndSetReviews();
+                    else onFetchRestaurants();
+                }
+                break;
+            case 'update':
+            case 'none':
+            default:
+                if (fetchedRestaurant) onClearFetchedRestaurant();
+                if (!fetchedRestaurant && !areRestaurantsLoaded) onFetchRestaurants();
+                break;
+        }
+
+        if (selectedRestaurantIdExists) onClearSelectedRestaurantId();
+
+    }, [
+        restaurants.length,
+        onFetchRestaurants,
+        onClearSelectedRestaurantId,
+        areRestaurantsLoaded,
+        selectedRestaurantIdExists,
+        onFetchRestaurantsAndSetReviews,
+        location.state,
+        fetchedRestaurant,
+        onClearFetchedRestaurant
+    ]);
 
     const history = useHistory();
 
     const onRecordClick = useCallback((id) => {
-        onSelectRestaurant(id);
+        onSelectRestaurantId(id);
         history.push(`${match.url}/${id}`);
-    }, [onSelectRestaurant, history, match]);
+    }, [onSelectRestaurantId, history, match.url]);
 
     const onEditButtonClick = useCallback((id) => {
-        onSelectRestaurant(id);
+        onSelectRestaurantId(id);
         history.push(`${match.url}/${id}/update`);
-    }, [history, match.url, onSelectRestaurant]);
+    }, [history, match.url, onSelectRestaurantId]);
 
     let restaurantListJsx = (
         <RestaurantList 
@@ -73,18 +106,22 @@ const RestaurantFinder = ({
 };
 
 const mapStateToProps = (state) => ({
+    areRestaurantsLoaded: state.restaurants.areRestaurantsLoaded,
     restaurants: state.restaurants.restaurants,
+    fetchedRestaurant: state.restaurants.fetchedRestaurant,
     loading: state.restaurants.loading,
     error: state.restaurants.error,
-    selectedRestaurantExists: state.restaurants.selectedRestaurant !== undefined
+    selectedRestaurantIdExists: state.restaurants.selectedRestaurantId !== undefined
 });
 
 const mapDispatchToProps = (dispatch) => ({
     onFetchRestaurants: () => dispatch(restaurantEffects[types.START_FETCH_RESTAURANTS]()),
+    onFetchRestaurantsAndSetReviews: () => dispatch(restaurantEffects[types.START_FETCH_RESTAURANTS_AND_SET_REVIEWS]()),
     onAddRestaurant: (restaurant) => dispatch(restaurantEffects[types.START_ADD_RESTAURANT](restaurant)),
     onDeleteRestaurant: (id) => dispatch(restaurantEffects[types.START_DELETE_RESTAURANT](id)),
-    onSelectRestaurant: (id) => dispatch(restaurantActions.selectRestaurant(id)),
-    onClearSelectedRestaurant: () => dispatch(restaurantActions.clearSelectedRestaurant())
+    onSelectRestaurantId: (id) => dispatch(restaurantActions.selectRestaurantId(id)),
+    onClearSelectedRestaurantId: () => dispatch(restaurantActions.clearSelectedRestaurantId()),
+    onClearFetchedRestaurant: () => dispatch(restaurantActions.clearFetchedRestaurant())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantFinder);

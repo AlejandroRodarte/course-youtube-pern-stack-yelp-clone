@@ -10,6 +10,8 @@ import RestaurantForm from './../common/RestaurantForm';
 import Spinner from './../../ui/spinners/BasicSpinner';
 
 const RestaurantUpdate = ({
+    areRestaurantsLoaded,
+    fetchedRestaurant,
     selectedRestaurant,
     onStartFetchRestaurant,
     onStartUpdateRestaurant,
@@ -22,26 +24,38 @@ const RestaurantUpdate = ({
     const history = useHistory();
 
     useEffect(() => {
-        if (selectedRestaurant || error) return;
-        onStartFetchRestaurant(id);
-    }, [id, onStartFetchRestaurant, selectedRestaurant, error]);
+        if (fetchedRestaurant || error) return;
+        if (!areRestaurantsLoaded) onStartFetchRestaurant(id);
+    }, [id, onStartFetchRestaurant, error, areRestaurantsLoaded, fetchedRestaurant]);
 
     const onSubmit = useCallback(async (restaurant) => {
         const error = await onStartUpdateRestaurant(id, restaurant);
-        if (!error) history.push('/restaurants');
+        if (!error) history.push('/restaurants', { from: 'update' });
     }, [onStartUpdateRestaurant, id, history]);
 
-    const onGoBackClick = () => {
+    const onRedirectClick = useCallback((path) => {
         if (error) onClearRestaurantsError();
-        history.push('/restaurants');
-    };
+        history.push(path);
+    }, [error, history, onClearRestaurantsError]);
+
+    const restaurant = areRestaurantsLoaded ? selectedRestaurant : fetchedRestaurant;
 
     let restaurantFormJsx = (
         <RestaurantForm
             onSubmit={ onSubmit }
             submitButtonLabel="Update Restaurant"
-            restaurant={ selectedRestaurant }
+            restaurant={ restaurant }
         />
+    );
+
+    let restaurantReviewsButtonJsx = (
+        <button
+            type="button"
+            className="col-4 btn btn-warning mx-2"
+            onClick={ () => onRedirectClick(`/restaurants/${id}`) }
+        >
+            Restaurant Reviews
+        </button>
     );
 
     if (loading) {
@@ -50,6 +64,7 @@ const RestaurantUpdate = ({
 
     if (error) {
         restaurantFormJsx = error;
+        restaurantReviewsButtonJsx = null;
     }
 
     return (
@@ -60,22 +75,27 @@ const RestaurantUpdate = ({
                 Update Restaurant
             </h1>
             { restaurantFormJsx }
-            <div>
+            <div
+                className="row justify-content-center mx-2"
+            >
                 <button
                     type="button"
-                    className="btn btn-warning"
-                    onClick={ onGoBackClick }
+                    className="col-4 btn btn-warning mx-2"
+                    onClick={ () => onRedirectClick('/restaurants') }
                 >
-                    Go back to restaurants list
+                    Restaurant List
                 </button>
+                { restaurantReviewsButtonJsx }
             </div>
         </div>
     );
 
 };
 
-const mapStateToProps = (state) => ({
-    selectedRestaurant: state.restaurants.selectedRestaurant,
+const mapStateToProps = (state, ownProps) => ({
+    areRestaurantsLoaded: state.restaurants.areRestaurantsLoaded,
+    fetchedRestaurant: state.restaurants.fetchedRestaurant,
+    selectedRestaurant: state.restaurants.restaurants.find((restaurant) => restaurant.id === ownProps.match.params.id),
     loading: state.restaurants.loading,
     error: state.restaurants.error
 });

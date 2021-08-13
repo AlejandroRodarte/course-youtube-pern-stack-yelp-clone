@@ -12,7 +12,8 @@ const addRestaurant = async (restaurant) => {
         const response = await axios.post('/restaurants', payload);
         return [response.data, undefined];
     } catch (e) {
-        return [undefined, e.response.data];
+        const error = e.message === 'Network Error' ? { status: 'Error', data: { message: e.message } } : e.response.data;
+        return [undefined, error];
     }
 
 };

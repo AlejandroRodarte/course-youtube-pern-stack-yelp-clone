@@ -32,8 +32,8 @@ const deleteRestaurant = (id) => ({
     }
 });
 
-const selectRestaurant = (id) => ({
-    type: types.SELECT_RESTAURANT,
+const selectRestaurantId = (id) => ({
+    type: types.SELECT_RESTAURANT_ID,
     payload: {
         id
     }
@@ -57,8 +57,8 @@ const clearRestaurantsError = () => ({
     type: types.CLEAR_RESTAURANTS_ERROR
 });
 
-const clearSelectedRestaurant = () => ({
-    type: types.CLEAR_SELECTED_RESTAURANT
+const clearSelectedRestaurantId = () => ({
+    type: types.CLEAR_SELECTED_RESTAURANT_ID
 });
 
 const fetchRestaurantReviews = (reviews) => ({
@@ -68,18 +68,28 @@ const fetchRestaurantReviews = (reviews) => ({
     }
 });
 
+const setReviewsFromFetchedRestaurant = () => ({
+    type: types.SET_REVIEWS_FROM_FETCHED_RESTAURANT
+});
+
+const clearFetchedRestaurant = () => ({
+    type: types.CLEAR_FETCHED_RESTAURANT
+});
+
 const actions = {
     setRestaurantsLoadingFlag,
     setRestaurantsFailFlag,
     fetchRestaurants,
     addRestaurant,
     deleteRestaurant,
-    selectRestaurant,
+    selectRestaurantId,
     fetchRestaurant,
     updateRestaurant,
     clearRestaurantsError,
-    clearSelectedRestaurant,
-    fetchRestaurantReviews
+    clearSelectedRestaurantId,
+    fetchRestaurantReviews,
+    setReviewsFromFetchedRestaurant,
+    clearFetchedRestaurant
 };
 
 export default actions;

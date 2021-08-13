@@ -6,7 +6,8 @@ const deleteRestaurant = async (id) => {
         const response = await axios.delete(`/restaurants/${id}`);
         return [response.data, undefined];
     } catch (e) {
-        return [undefined, e.response.data];
+        const error = e.message === 'Network Error' ? { status: 'Error', data: { message: e.message } } : e.response.data;
+        return [undefined, error];
     }
 
 };

@@ -17,3 +17,10 @@ CREATE TABLE IF NOT EXISTS reviews (
         FOREIGN KEY(restaurant_id)
             REFERENCES restaurants(id)
 );
+
+ALTER TABLE reviews
+DROP CONSTRAINT fk_restaurant,
+ADD CONSTRAINT fk_restaurant
+    FOREIGN KEY(restaurant_id)
+        REFERENCES restaurants(id)
+            ON DELETE CASCADE;
