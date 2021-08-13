@@ -15,6 +15,11 @@ const StarRating = ({ rating }) => {
                     </i>
                 ))
             }
+            <span
+                className="text-warning mx-1"
+            >
+                { rating }
+            </span>
         </>
     );
 
