@@ -1,6 +1,6 @@
 const validatorStrategies = require('../validators/strategies');
 
-const validateObject = (spec, object) => {
+const validateObject = async (spec, object, ctx) => {
 
     const keys = Object.keys(spec);
     const errors = {};
@@ -50,6 +50,12 @@ const validateObject = (spec, object) => {
                 case 'max-inclusive': {
                     isValid = validatorStrategies.maxInclusive(strategy.spec, object[key]);
                     if (!isValid) errors[key] = `Field ${key} must be at most ${strategy.spec.limit}.`;
+                    break;
+                }
+
+                case 'async': {
+                    isValid = await strategy.spec.validateAsync(ctx);
+                    if (!isValid) errors[key] = strategy.spec.message;
                     break;
                 }
 

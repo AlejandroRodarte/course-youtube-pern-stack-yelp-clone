@@ -1,6 +1,11 @@
 const common = require('../../util/common');
 
-const validateObject = (spec, path) => (req, res, next) => {
+const validateObject = (spec, path) => async (req, res, next) => {
+
+    const ctx = {
+        knex: req.app.get('queryBuilder'),
+        body: req.body
+    };
 
     const data = common.dotPathToObjectRef(req.body, path);
 
@@ -15,7 +20,7 @@ const validateObject = (spec, path) => (req, res, next) => {
                 });
     }
 
-    const errors = common.validateObject(spec, data);
+    const errors = await common.validateObject(spec, data, ctx);
 
     if (errors) {
         return res
@@ -33,12 +38,15 @@ const validateObject = (spec, path) => (req, res, next) => {
     const dataKeys = JSON.stringify(Object.keys(data));
 
     if (specKeys !== dataKeys) {
+
+        const fields = Object.keys(spec).join(', ');
+
         return res
-                .status(404)
+                .status(400)
                 .send({
                     status: 'Error',
                     data: {
-                        message: 'Only include name, location, and price range.'
+                        message: `Only include these fields: ${fields}.`
                     }
                 });
     }

@@ -4,6 +4,8 @@ const dataType = (spec, value) => {
             return typeof value === 'string';
         case 'number':
             return typeof value === 'number';
+        case 'string-number':
+            return typeof value === 'string' && !isNaN(+value);
         default:
             return false;
     };
