@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
 const RestaurantForm = ({
@@ -14,7 +15,7 @@ const RestaurantForm = ({
         mode: 'onBlur'
     });
 
-    const onSubmitButtonClick = (restaurant) => {
+    const onSubmitButtonClick = useCallback((restaurant) => {
 
         const parsedRestaurant = {
             ...restaurant,
@@ -23,7 +24,7 @@ const RestaurantForm = ({
 
         onSubmit(parsedRestaurant);
 
-    };
+    }, [onSubmit]);
 
     const validations = {
 

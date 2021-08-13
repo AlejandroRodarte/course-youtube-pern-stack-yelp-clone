@@ -1,6 +1,10 @@
+import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 
-const ReviewForm = () => {
+const ReviewForm = ({
+    onSubmit,
+    submitButtonLabel
+}) => {
 
     const {
         register,
@@ -10,7 +14,7 @@ const ReviewForm = () => {
         mode: 'onBlur'
     });
 
-    const onSubmitButtonClick = (review) => console.log(review);
+    const onSubmitButtonClick = useCallback((review) => onSubmit(review), [onSubmit]);
 
     const validations = {
 
@@ -118,7 +122,7 @@ const ReviewForm = () => {
                     <button
                         className="btn btn-primary"
                     >
-                        Submit
+                        { submitButtonLabel }
                     </button>
                 </div>
             </form>

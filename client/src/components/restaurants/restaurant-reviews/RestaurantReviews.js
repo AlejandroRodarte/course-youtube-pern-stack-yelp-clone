@@ -51,6 +51,13 @@ const RestaurantReviews = ({
         history.push(path, { from: 'reviews' });
     }, [error, history, onClearRestaurantsError]);
 
+    const onAddReview = useCallback((review) => {
+        console.log({
+            ...review,
+            restaurant_id: id
+        });
+    }, [id]);
+
     const restaurant = areRestaurantsLoaded ? selectedRestaurant : fetchedRestaurant;
 
     let reviewListJsx = !restaurant ? null : (
@@ -73,7 +80,10 @@ const RestaurantReviews = ({
                     </p>
                 }
             </div>
-            <ReviewForm/>
+            <ReviewForm
+                onSubmit={ onAddReview }
+                submitButtonLabel="Add Review"
+            />
         </>
     );
 
