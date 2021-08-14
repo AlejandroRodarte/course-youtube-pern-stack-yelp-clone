@@ -121,6 +121,36 @@ const restaurantsReducer = (state = initialState, action) => {
                 ...state,
                 fetchedRestaurant: undefined
             };
+        case types.ADD_REVIEW:
+            return {
+                ...state,
+                loading: false,
+                fetchedRestaurant: state.areRestaurantsLoaded ? state.fetchedRestaurant : {
+                    ...state.fetchedRestaurant,
+                    review_count: `${+state.fetchedRestaurant.review_count + 1}`,
+                    average_rating: `${(((+state.fetchedRestaurant.average_rating * +state.fetchedRestaurant.review_count) + action.payload.review.rating) / (+state.fetchedRestaurant.review_count + 1)).toFixed(2)}`,
+                    reviews: [
+                        ...state.fetchedRestaurant.reviews,
+                        action.payload.review
+                    ]
+                },
+                restaurants: !state.areRestaurantsLoaded ?
+                    state.restaurants :
+                    state.restaurants.map(
+                        (restaurant) => restaurant.id === action.payload.review.restaurant_id ?
+                        {
+                            ...restaurant,
+                            review_count: `${+restaurant.review_count + 1}`,
+                            average_rating: `${(((+restaurant.average_rating * +restaurant.review_count) + action.payload.review.rating) / (+restaurant.review_count + 1)).toFixed(2)}`,
+                            reviews: [
+                                ...restaurant.reviews,
+                                action.payload.review
+                            ]
+                        } :
+                        restaurant
+                    ),
+                error: null
+            };
         default:
             return state;
     }

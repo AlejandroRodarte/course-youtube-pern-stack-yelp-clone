@@ -51,7 +51,7 @@ const Restaurant = ({
                     (
                         <>
                             <StarRating
-                                rating={ +restaurant.average_rating }
+                                rating={ restaurant.average_rating }
                             />
                             <span
                                 className="mx-2 text-warning"

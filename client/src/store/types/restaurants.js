@@ -28,3 +28,6 @@ export const START_FETCH_RESTAURANTS_AND_SET_REVIEWS = 'restaurants/startFetchRe
 export const SET_REVIEWS_FROM_FETCHED_RESTAURANT = 'restaurants/setReviewsFromFetchedRestaurant';
 
 export const CLEAR_FETCHED_RESTAURANT = 'restaurants/clearFetchedRestaurant';
+
+export const START_ADD_REVIEW = 'restaurants/startAddReview';
+export const ADD_REVIEW = 'restaurants/addReview';

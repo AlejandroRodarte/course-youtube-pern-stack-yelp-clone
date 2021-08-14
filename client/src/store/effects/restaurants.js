@@ -89,6 +89,7 @@ const startFetchRestaurantReviews = (id) => async (dispatch) => {
 
     if (error) {
         dispatch(restaurantActions.setRestaurantsFailFlag(error.data.message));
+        return;
     }
 
     dispatch(restaurantActions.fetchRestaurantReviews(response.data.reviews));
@@ -105,6 +106,21 @@ const startFetchRestaurantsAndSetReviews = () => async (dispatch) => {
 
 };
 
+const startAddReview = (review) => async (dispatch) => {
+
+    dispatch(restaurantActions.setRestaurantsLoadingFlag());
+
+    const [response, error] = await reviewsApi.addReview(review);
+
+    if (error) {
+        dispatch(restaurantActions.setRestaurantsFailFlag(error.data.message));
+        return;
+    }
+
+    dispatch(restaurantActions.addReview(response.data.review));
+
+};
+
 const effects = {
     [types.START_FETCH_RESTAURANTS]: startFetchRestaurants,
     [types.START_ADD_RESTAURANT]: startAddRestaurant,
@@ -112,7 +128,8 @@ const effects = {
     [types.START_FETCH_RESTAURANT]: startFetchRestaurant,
     [types.START_UPDATE_RESTAURANT]: startUpdateRestaurant,
     [types.START_FETCH_RESTAURANT_REVIEWS]: startFetchRestaurantReviews,
-    [types.START_FETCH_RESTAURANTS_AND_SET_REVIEWS]: startFetchRestaurantsAndSetReviews
+    [types.START_FETCH_RESTAURANTS_AND_SET_REVIEWS]: startFetchRestaurantsAndSetReviews,
+    [types.START_ADD_REVIEW]: startAddReview
 };
 
 export default effects;

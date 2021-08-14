@@ -20,7 +20,7 @@ const addReview = async (req, res) => {
                 status: 'OK',
                 data: {
                     message: 'A new review has been created.',
-                    restaurant: newReview
+                    review: newReview
                 }
             });
 

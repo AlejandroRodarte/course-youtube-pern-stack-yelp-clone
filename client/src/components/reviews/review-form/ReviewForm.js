@@ -14,7 +14,10 @@ const ReviewForm = ({
         mode: 'onBlur'
     });
 
-    const onSubmitButtonClick = useCallback((review) => onSubmit(review), [onSubmit]);
+    const onSubmitButtonClick = useCallback((review) => onSubmit({
+        ...review,
+        rating: +review.rating
+    }), [onSubmit]);
 
     const validations = {
 

@@ -10,6 +10,7 @@ import ReviewList from './../../reviews/review-list/ReviewList';
 import ReviewForm from './../../reviews/review-form/ReviewForm';
 
 import Spinner from './../../ui/spinners/BasicSpinner';
+import StarRating from './../../ui/metrics/StarRating';
 
 const RestaurantReviews = ({
     areRestaurantsLoaded,
@@ -19,7 +20,8 @@ const RestaurantReviews = ({
     loading,
     onStartFetchRestaurant,
     onStartFetchRestaurantReviews,
-    onClearRestaurantsError
+    onClearRestaurantsError,
+    onStartAddReview
 }) => {
 
     const { id } = useParams();
@@ -51,12 +53,10 @@ const RestaurantReviews = ({
         history.push(path, { from: 'reviews' });
     }, [error, history, onClearRestaurantsError]);
 
-    const onAddReview = useCallback((review) => {
-        console.log({
-            ...review,
-            restaurant_id: id
-        });
-    }, [id]);
+    const onAddReview = useCallback((review) => onStartAddReview({
+        ...review,
+        restaurant_id: id
+    }), [id, onStartAddReview]);
 
     const restaurant = areRestaurantsLoaded ? selectedRestaurant : fetchedRestaurant;
 
@@ -67,6 +67,18 @@ const RestaurantReviews = ({
             >
                 { restaurant.name }
             </h1>
+            {
+                (!restaurant.reviews || restaurant.reviews.length === 0) ?
+                null : (
+                    <div
+                        className="text-center m-2"
+                    >
+                        <StarRating
+                            rating={ restaurant.average_rating }
+                        />
+                    </div>
+                )
+            }
             <div
                 className="m-2"
             >
@@ -137,7 +149,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch) => ({
     onStartFetchRestaurant: (id, params = {}) => dispatch(restaurantEffects[types.START_FETCH_RESTAURANT](id, params)),
     onStartFetchRestaurantReviews: (id, storeOnFetchedRestaurant) => dispatch(restaurantEffects[types.START_FETCH_RESTAURANT_REVIEWS](id, storeOnFetchedRestaurant)),
-    onClearRestaurantsError: () => dispatch(restaurantActions.clearRestaurantsError())
+    onClearRestaurantsError: () => dispatch(restaurantActions.clearRestaurantsError()),
+    onStartAddReview: (review) => dispatch(restaurantEffects[types.START_ADD_REVIEW](review))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantReviews);

@@ -2,7 +2,7 @@ import metrics from '../../../util/metrics';
 
 const StarRating = ({ rating }) => {
 
-    const starIcons = metrics.generateStarIcons(rating);
+    const starIcons = metrics.generateStarIcons(+rating);
 
     return (
         <>
